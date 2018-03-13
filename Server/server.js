@@ -29,10 +29,24 @@ var app = express();
 //     console.log('Listening on port 3000');
 // });
 
-app.get('/', function (request, response) {
-    response.send('Hi,Welcome!');
+//Json string.
+app.get("/", function (request, response) {
+    response.json({
+        text: "Json string."
+    })
 })
 
+//Params
+app.get('/test/:id/:name', function (req, res) {
+    res.send("input:" + req.params.id + '&' + req.params.name);
+});
+
+//Querystring
+app.get('/test/:name', function (req, res) {
+    res.send("input:" + req.params.name + ' querystring = ' + JSON.stringify(req.query));
+});
+
+//listen
 app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+    console.log('Listening on port 3000!');
 });
