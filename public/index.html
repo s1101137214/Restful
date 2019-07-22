@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<header>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function onPaste(e) {
+            // trigger event
+            let items = this.event.clipboardData.items;
+            let file = null;
+            for (var i = 0; i < items.length; i++) {
+                if (
+                    items[i].type &&
+                    items[i].type.indexOf("image/") >= 0
+                ) {
+                    file = items[i].getAsFile();
+                    break;
+                }
+            }
+
+            console.log(file)
+            if (file) {
+                const url = "https://google.com";
+                const fd = new FormData();
+
+                // const file = new File(
+                //     [null],
+                //     new Date().getTime() + ".png",
+                //     {
+                //         type: "image/png",
+                //         path: "",
+                //         lastModified: new Date()
+                //     }
+                // );
+
+                fd.append('id', "kent_chou");
+                fd.append('file', file);
+
+                axios.post(url, fd, {
+                    headers: {
+                        'test': "test",
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(function (res) {
+                    console.log(res)
+                }).catch(function (err) {
+                    console.log(err);
+                });
+            }
+        }
+    </script>
+</header>
+
+<input type="text" id="ip" onpaste="onPaste(this)">
